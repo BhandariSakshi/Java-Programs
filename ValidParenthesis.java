@@ -1,44 +1,67 @@
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
-class ValidParenthesis {
-    
-    public boolean isValid(String s) {
-        Stack<Character> st = new Stack<>();
+public class ValidParenthesis {
 
-        for (char ch : s.toCharArray()) {
+    char arr[];
+    int top;
+
+    ValidParenthesis(int size) {
+        arr = new char[size];
+        top = -1;
+    }
+
+    void push(char a) {
+        if (top == arr.length - 1) {
+            System.out.println("Stack Overflow");
+        } else {
+            arr[++top] = a;
+        }
+    }
+
+    char pop() {
+        if (top == -1) {
+            return '\0'; 
+        } else {
+            return arr[top--];
+        }
+    }
+
+    boolean isEmpty() {
+        return top == -1;
+    }
+
+    public static boolean isValid(String str) {
+        ValidParenthesis stack = new ValidParenthesis(str.length());
+
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
             if (ch == '(' || ch == '{' || ch == '[') {
-                st.push(ch);
-            } else {
-                if (st.isEmpty()) {
-                    return false;
-                }
-                char top = st.pop();
-                if ((ch == ')' && top != '(') ||
-                    (ch == '}' && top != '{') ||
-                    (ch == ']' && top != '[')) {
+                stack.push(ch);
+            } else if (ch == ')' || ch == '}' || ch == ']') {
+                char topChar = stack.pop();
+
+                if ((ch == ')' && topChar != '(') ||
+                    (ch == '}' && topChar != '{') ||
+                    (ch == ']' && topChar != '[')) {
                     return false;
                 }
             }
         }
 
-        return st.isEmpty();
+        return stack.isEmpty(); 
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the string: ");
-        String input = sc.nextLine();
+        Scanner sobj = new Scanner(System.in);
 
-        ValidParenthesis obj = new ValidParenthesis();
-        boolean isValid = obj.isValid(input);
+        System.out.print("Enter expression: ");
+        String input = sobj.nextLine();
 
-        if (isValid) {
-            System.out.println("Valid Parenthesis");
+        if (isValid(input)) {
+            System.out.println("Valid");
         } else {
-            System.out.println("Not Valid Parenthesis");
+            System.out.println("Not Valid");
         }
-
-        sc.close();
     }
 }
