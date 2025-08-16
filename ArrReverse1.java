@@ -33,7 +33,7 @@ class ArrayX
         System.out.println("Reversed array: ");
         for(i = Arr.length-1; i >= 0; i--)
         {
-            System.err.print(Arr[i]+"\t");
+            System.out.print(Arr[i]+"\t");
         }
     }
 }
