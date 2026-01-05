@@ -66,7 +66,5 @@ public class BubbleSort {
         obj.sort();
         obj.Display();
 
-        
-
     }
 }
